@@ -2,6 +2,7 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_cleaner import DataCleaner
 from src.components.data_transformation import DataTransformation
 from src.components.target_label_encoder import TargetLabelEncoder
+from src.components.pca_handler import PCAHandler
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -51,6 +52,10 @@ def main():
     # Encoding target variable
     label_encoder = TargetLabelEncoder()
     y_encoded = label_encoder.fit_transform(y)
+
+    # Apply PCA
+    pca_handler = PCAHandler(n_components=0.85)
+    X_pca = pca_handler.fit_transform(X_scaled)
     
 
 
