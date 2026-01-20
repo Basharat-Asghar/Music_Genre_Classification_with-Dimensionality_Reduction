@@ -1,5 +1,6 @@
 from src.components.data_ingestion import DataIngestion
 from src.components.data_cleaner import DataCleaner
+from src.components.data_transformation import DataTransformation
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -37,6 +38,10 @@ def main():
     df = cleaner.remove_duplicates(df)
     # Handle missing values
     df = cleaner.handle_missing_values(df, strategy='drop')
+
+    transformer = DataTransformation()
+    # Initiate data transformation
+    train_arr, test_arr,_ = transformer.initiate_data_transformation(df)
 
 
 if __name__ == "__main__":
