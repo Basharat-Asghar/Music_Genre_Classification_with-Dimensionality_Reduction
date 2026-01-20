@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object
+from src.utils import save_object, load_object
 
 @dataclass
 class DataTransformationConfig:
@@ -56,45 +56,17 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys)
         
-    '''
-    def get_label_encoder(self):
+
+
+    def fit_transform(self, X: pd.DataFrame):
         try:
-            logging.info("Creating label encoder for target variable.")
+            logging.info("Starting data transformation process.")
 
-            label_encoder = LabelEncoder()
+            # Get the data transformer object
+            preprocessor = self.get_data_transformer_object(X)
 
-            logging.info("Label encoder created successfully.")
-
-            return label_encoder
-
-        except Exception as e:
-            raise CustomException(e, sys)
-    '''
-
-
-    def initiate_data_transformation(self, df: pd.DataFrame):
-        try:
-            
-            logging.info("Initiating data transformation.")
-
-            preprocessor = self.get_data_transformer_object(df)
-
-            train_df, test_df = train_test_split(
-                df, test_size=0.2, random_state=42
-            )
-            logging.info("Data split into train and test sets.")
-            logging.info(f"Train shape: {train_df.shape}, Test shape: {test_df.shape}")
-
-            # Separate features and target
-            target_column_name = "genre"
-            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
-            target_feature_train_df = train_df[target_column_name]
-            input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
-            target_feature_test_df = test_df[target_column_name]
-
-            # Fit and transform the training data, transform the test data
-            input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessor.transform(input_feature_test_df)
+            # Fit and transform the data
+            X_scaled = preprocessor.fit_transform(X)
             logging.info("Data transformation completed.")
 
             # Save the preprocessor object
@@ -104,53 +76,28 @@ class DataTransformation:
             )
             logging.info("Preprocessor object saved successfully.")
 
-            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
-            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
-
             return (
-                train_arr,
-                test_arr,
+                pd.DataFrame(X_scaled, columns=X.columns),
                 self.data_transformation_config.preprocessor_obj_file_path
             )
 
         except Exception as e:
             raise CustomException(e, sys)
         
-    '''
-    def initiate_label_encoding(self, train_df: pd.DataFrame, test_df: pd.DataFrame):
+
+    def transform(self, X: pd.DataFrame):
         try:
-            logging.info("Initiating label encoding for target variable.")
+            logging.info("Starting data transformation for new data.")
 
-            label_encoder = self.get_label_encoder()
+            # Load the preprocessor object
+            preprocessor = load_object(self.data_transformation_config.preprocessor_obj_file_path)
 
-            # Separate features and target
-            target_column_name = "genre"
-            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
-            target_feature_train_df = train_df[target_column_name]
-            input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
-            target_feature_test_df = test_df[target_column_name]
+            # Transform the data
+            X_scaled = preprocessor.transform(X)
+            logging.info("Data transformation for new data completed.")
 
-            # Fit and transform the training target, transform the test target
-            target_feature_train_arr = label_encoder.fit_transform(target_feature_train_df)
-            target_feature_test_arr = label_encoder.transform(target_feature_test_df)
-            logging.info("Label encoding completed.")
+            return pd.DataFrame(X_scaled, columns=X.columns)
 
-            train_arr = np.c_[input_feature_train_df, target_feature_train_arr]
-            test_arr = np.c_[input_feature_test_df, target_feature_test_arr]
-
-            # Save the label encoder object
-            save_object(
-                file_path=self.data_transformation_config.label_encoder_obj_file_path,
-                obj=label_encoder
-            )
-            logging.info("Label encoder object saved successfully.")
-
-            return (
-                train_arr,
-                test_arr,
-                self.data_transformation_config.label_encoder_obj_file_path
-            )
-        
         except Exception as e:
             raise CustomException(e, sys)
-    '''
+        

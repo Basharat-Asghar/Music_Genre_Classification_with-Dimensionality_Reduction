@@ -39,9 +39,14 @@ def main():
     # Handle missing values
     df = cleaner.handle_missing_values(df, strategy='drop')
 
+    # Split features / target
+    X = df.drop(columns=['genre'])
+    y = df['genre']
+
     transformer = DataTransformation()
-    # Initiate data transformation
-    train_arr, test_arr,_ = transformer.initiate_data_transformation(df)
+    # Fit and transform features
+    X_scaled,_ = transformer.fit_transform(X) 
+    
 
 
 if __name__ == "__main__":
