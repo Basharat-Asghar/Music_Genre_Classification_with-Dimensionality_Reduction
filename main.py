@@ -1,4 +1,5 @@
 from src.components.data_ingestion import DataIngestion
+from src.components.data_cleaner import DataCleaner
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -28,6 +29,14 @@ def main():
     ingestion.validate_data(df, EXPECTED_COLUMNS)
     # Save processed data
     ingestion.save_processed_data(df)
+
+    cleaner = DataCleaner()
+    # Standardize column names
+    df = cleaner.standardize_column_names(df)
+    # Remove duplicates
+    df = cleaner.remove_duplicates(df)
+    # Handle missing values
+    df = cleaner.handle_missing_values(df, strategy='drop')
 
 
 if __name__ == "__main__":
