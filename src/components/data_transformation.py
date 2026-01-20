@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import joblib
 
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -18,7 +17,6 @@ from src.utils import save_object, load_object
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path: str = os.path.join("artifacts", "preprocessor.pkl")
-    #label_encoder_obj_file_path: str = os.path.join("artifacts", "label_encoder.pkl")
 
 class DataTransformation:
     """
