@@ -1,6 +1,7 @@
 from src.components.data_ingestion import DataIngestion
 from src.components.data_cleaner import DataCleaner
 from src.components.data_transformation import DataTransformation
+from src.components.target_label_encoder import TargetLabelEncoder
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -45,7 +46,11 @@ def main():
 
     transformer = DataTransformation()
     # Fit and transform features
-    X_scaled,_ = transformer.fit_transform(X) 
+    X_scaled,_ = transformer.fit_transform(X)
+
+    # Encoding target variable
+    label_encoder = TargetLabelEncoder()
+    y_encoded = label_encoder.fit_transform(y)
     
 
 
