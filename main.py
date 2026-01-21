@@ -5,6 +5,7 @@ from src.components.target_label_encoder import TargetLabelEncoder
 from src.components.pca_handler import PCAHandler
 from src.components.model_trainer import ModelTrainer
 from src.components.model_evaluator import ModelEvaluator
+from src.components.model_validator import ModelValidator
 from src.logger import logging
 from src.utils import save_object
 
@@ -79,6 +80,10 @@ def main():
             best_model = model
 
     logging.info(f"Best Model: {best_model.__class__.__name__} with Macro F1 Score: {best_f1}")
+
+    # Validate best model using cross-validation
+    validator = ModelValidator(best_model, X_pca, y_encoded, cv=5, scoring='f1_macro')
+    mean_score, std_score = validator.validate()
 
 
 if __name__ == "__main__":
