@@ -3,6 +3,7 @@ from src.components.data_cleaner import DataCleaner
 from src.components.data_transformation import DataTransformation
 from src.components.target_label_encoder import TargetLabelEncoder
 from src.components.pca_handler import PCAHandler
+from src.components.model_trainer import ModelTrainer
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -56,7 +57,12 @@ def main():
     # Apply PCA
     pca_handler = PCAHandler(n_components=0.85)
     X_pca = pca_handler.fit_transform(X_scaled)
-    
+
+    # Train models
+    trainer = ModelTrainer(X_pca, y_encoded)
+    models, X_test, y_test = trainer.train_models()
+
+    # Model evaluation
 
 
 if __name__ == "__main__":
