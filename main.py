@@ -4,6 +4,9 @@ from src.components.data_transformation import DataTransformation
 from src.components.target_label_encoder import TargetLabelEncoder
 from src.components.pca_handler import PCAHandler
 from src.components.model_trainer import ModelTrainer
+from src.components.model_evaluator import ModelEvaluator
+from src.logger import logging
+from src.utils import save_object
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -63,6 +66,19 @@ def main():
     models, X_test, y_test = trainer.train_models()
 
     # Model evaluation
+    evaluator = ModelEvaluator()
+
+    best_model = None
+    best_f1 = 0.0
+
+    for name, model in models.items():
+        accuracy, macro_f1, report, cm = evaluator.evaluate_model(model, X_test, y_test)
+
+        if macro_f1 > best_f1:
+            best_f1 = macro_f1
+            best_model = model
+
+    logging.info(f"Best Model: {best_model.__class__.__name__} with Macro F1 Score: {best_f1}")
 
 
 if __name__ == "__main__":
