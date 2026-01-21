@@ -6,8 +6,12 @@ from src.components.pca_handler import PCAHandler
 from src.components.model_trainer import ModelTrainer
 from src.components.model_evaluator import ModelEvaluator
 from src.components.model_validator import ModelValidator
+from src.components.model_tuner import HyperParameterTuner
 from src.logger import logging
 from src.utils import save_object
+
+from scipy.stats import loguniform
+import os
 
 EXPECTED_COLUMNS = [
     "Tempo",
@@ -84,6 +88,29 @@ def main():
     # Validate best model using cross-validation
     validator = ModelValidator(best_model, X_pca, y_encoded, cv=5, scoring='f1_macro')
     mean_score, std_score = validator.validate()
+
+    # HyperParameter Tuning
+    param_dist = {
+        'C': loguniform(1e-4, 1e4),
+        'solver': ['lbfgs', 'saga'],
+        'class_weight': [None, 'balanced']
+    }
+
+    model_tuner = HyperParameterTuner(
+        best_model,
+        X_pca, y_encoded,
+        param_dist,
+        iter=50, scoring='f1_macro', cv=5
+    )
+
+    tuned_model = model_tuner.tuner()
+
+    # Saving tuned model
+    save_object(
+        file_path=os.path.join("artifacts", "tuned_model.pkl"),
+        obj=tuned_model
+    )
+    logging.info("Tuned Model Saved.")
 
 
 if __name__ == "__main__":
