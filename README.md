@@ -112,7 +112,7 @@ The challenge lies in handling **high-dimensional, correlated audio features** w
 
 ### 6. Cross-Validation & Tuning
 - 5-fold cross-validation
-- GridSearchCV for hyperparameter tuning
+- RandomizedSearchCV for hyperparameter tuning
 - Model selection based on Macro F1-score
 
 ---
