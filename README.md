@@ -152,7 +152,7 @@ cd Music_Genre_Classification_with-Dimensionality_Reduction
 ---
 
 ## Author
-Muhammad Basharat Asghar
-Entry-Level Data Scientist
+Muhammad Basharat Asghar \
+Entry-Level Data Scientist \
 [LinkedIn](https://www.linkedin.com/in/basharat-asghar/)
 [Portfolio](https://basharat-asghar.github.io/BasharatPortfolio/)
