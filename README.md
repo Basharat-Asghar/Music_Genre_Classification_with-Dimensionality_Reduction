@@ -7,6 +7,21 @@ The system is built to be **scalable, maintainable, and deployment-ready**, maki
 
 ---
 
+## Screenshots
+### Web Application Interface
+The Flask-based web application provides a clean and user-friendly interface for entering audio feature values and predicting the music genre.
+
+#### Home Page – Input Form
+![Home Page](screenshots/genre_1.png)
+
+#### Prediction Result
+![Prediction Result](screenshots/genre_2.png)
+
+**Live Application:**
+[Music Genre Classification Webapp](https://music-genre-prediction-wft4.onrender.com)
+
+---
+
 ## Problem Statement
 Automatically classifying music genres is a core problem in:
 - Music recommendation systems
@@ -14,6 +29,17 @@ Automatically classifying music genres is a core problem in:
 - Streaming platforms (e.g., Spotify, YouTube Music)
 
 The challenge lies in handling **high-dimensional, correlated audio features** while maintaining strong generalization performance.
+
+---
+
+## Tech Stack
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Flask
+- Gunicorn
+- Render (Cloud Deployment)
 
 ---
 
@@ -25,6 +51,14 @@ The challenge lies in handling **high-dimensional, correlated audio features** w
 - Modular, production-ready codebase (PEP 8 compliant)
 - Flask-based web application
 - Cloud deployment on **Render**
+
+---
+
+## Key Takeaways
+- Demonstrates **real-world ML system design**
+- Strong focus on **model generalization**
+- Clean separation of concerns
+- Production-ready deployment
 
 ---
 
@@ -101,7 +135,24 @@ The challenge lies in handling **high-dimensional, correlated audio features** w
 ---
 
 ## Installation & Local Setup
+
 ### Clone Repository
 ```
 git clone https://github.com/Basharat-Asghar/Music_Genre_Classification_with-Dimensionality_Reduction.git
+
+cd Music_Genre_Classification_with-Dimensionality_Reduction
 ```
+
+### Install Dependencies
+`pip install -r requirements.txt`
+
+### Run Application
+`python app.py`
+
+---
+
+## Author
+Muhammad Basharat Asghar
+Entry-Level Data Scientist
+[LinkedIn](https://www.linkedin.com/in/basharat-asghar/)
+[Portfolio](https://basharat-asghar.github.io/BasharatPortfolio/)
