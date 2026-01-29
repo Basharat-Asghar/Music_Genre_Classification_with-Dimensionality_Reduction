@@ -102,6 +102,6 @@ The challenge lies in handling **high-dimensional, correlated audio features** w
 
 ## Installation & Local Setup
 ### Clone Repository
-'''
+```
 git clone https://github.com/Basharat-Asghar/Music_Genre_Classification_with-Dimensionality_Reduction.git
-'''
+```
