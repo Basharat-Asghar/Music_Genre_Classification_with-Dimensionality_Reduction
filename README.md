@@ -97,3 +97,11 @@ The challenge lies in handling **high-dimensional, correlated audio features** w
 
 **Live Application:**
 [Music Genre Classification Webapp](https://music-genre-prediction-wft4.onrender.com)
+
+---
+
+## Installation & Local Setup
+### Clone Repository
+'''
+git clone https://github.com/Basharat-Asghar/Music_Genre_Classification_with-Dimensionality_Reduction.git
+'''
